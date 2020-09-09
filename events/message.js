@@ -1,5 +1,10 @@
 module.exports = (client, message) => {
 
+  if(message.guild !== null && !message.author.bot) {
+    message.reply("DM me instead!");
+    return;
+  }
+
   if(message.author.bot) return;
 
   if(message.content.indexOf(client.config.prefix) !== 0) return;
@@ -12,5 +17,5 @@ module.exports = (client, message) => {
   if(!cmd) return;
 
   cmd.run(client, message,args);
-  
+
 };
