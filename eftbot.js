@@ -3,8 +3,24 @@ const client = new Discord.Client();
 const config = require("./config.json");
 const fs = require("fs");
 const Enmap = require("enmap");
+const mysql = require("mysql");
 
-client.config = config
+var con = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password : "Peaceout1@",
+  database: "eft"
+});
+
+con.connect(err => {
+  if(err) {
+      throw err;
+  }
+  console.log("Connected to database");
+});
+
+client.config = config;
+client.con = con;
 
 fs.readdir("./events/", (err, files) => {
   if (err) return console.error(err);
