@@ -26,19 +26,21 @@ exports.run = (client, message, args) => {
       if (err) throw err;
       msg.query_result_ammo = result;
       const embed = new Discord.MessageEmbed();
-      embed.setTitle("This is the ammunition information for the given caliber");
+      embed.setTitle("This is the ammunition information for the given caliber: " + result[0].caliber);
+      embed.setColor('#e6e6e6');
+      embed.setDescription("__FD | PP | AD% | A% | R% | FC | 1 | 2 | 3 | 4 | 5 | 6__\nFD = Flesh Damage\nPP = Penetration Power\nAD% = Armor DMG %\nA% = Accuracy Percent\nR% = Recoil Percent\nFC = Fragmentation Chance\n1..6 = Armor Effectiveness Against Class");
 
       if(result.length > client.config.max_shown_in_message) {
           msg.last_item_index = client.config.max_shown_in_message - 1;
           for(i = 0; i < client.config.max_shown_in_message; i++) {
-            embed.addFields({name: result[i].name, value: "tbd"});
+            embed.addFields({name: result[i].name, value: result[i].flesh_damage + " | " + result[i].penetration_power + " | " + result[i].armor_damage_percent + " | " + result[i].accuracy_percent + " | " + result[i].recoil_percent + " | " + result[i].fragmentation_chance + " | " + result[i].armor_effect_1 + " | " + result[i].armor_effect_2 + " | " + result[i].armor_effect_3 + " | " + result[i].armor_effect_4 + " | " + result[i].armor_effect_5 + " | " + result[i].armor_effect_6});
           }
           msg.edit(embed);
           await msg.react("❌");
           await msg.react("➡️");
       } else {
           for(i = 0; i < result.length; i++) {
-            embed.addFields({name: result[i].name, value: "tbd"});
+            embed.addFields({name: result[i].name, value: result[i].flesh_damage + " | " + result[i].penetration_power + " | " + result[i].armor_damage_percent + " | " + result[i].accuracy_percent + " | " + result[i].recoil_percent + " | " + result[i].fragmentation_chance + " | " + result[i].armor_effect_1 + " | " + result[i].armor_effect_2 + " | " + result[i].armor_effect_3 + " | " + result[i].armor_effect_4 + " | " + result[i].armor_effect_5 + " | " + result[i].armor_effect_6});
           }
           msg.edit(embed);
           msg.last_item_index = result.length;

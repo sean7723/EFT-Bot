@@ -1,6 +1,7 @@
 const Discord = require("discord.js");
 
 module.exports = (client, messageReaction, user) => {
+  const message = messageReaction.message;
 
   if(!user.bot) {
     // For reacting to ammunition information messages, closes, goes to next page or previous page
@@ -24,16 +25,17 @@ module.exports = (client, messageReaction, user) => {
         }
         // Previous Page
         const embed = new Discord.MessageEmbed();
-        embed.setTitle("This is the ammunition information for the given caliber");
+        embed.setTitle("This is the ammunition information for the given caliber: " + messageReaction.message.query_result_ammo[0].caliber);
+        embed.setColor('#e6e6e6');
+        embed.setDescription("__FD | PP | AD% | A% | R% | FC | 1 | 2 | 3 | 4 | 5 | 6__\nFD = Flesh Damage\nPP = Penetration Power\nAD% = Armor DMG %\nA% = Accuracy Percent\nR% = Recoil Percent\nFC = Fragmentation Chance\n1..6 = Armor Effectiveness Against Class");
 
         if((messageReaction.message.last_item_index + 1) % client.config.max_shown_in_message !== 0) {
           messageReaction.message.last_item_index = messageReaction.message.last_item_index - ((messageReaction.message.last_item_index + 1) % client.config.max_shown_in_message)
         } else {
           messageReaction.message.last_item_index = messageReaction.message.last_item_index - client.config.max_shown_in_message;
         }
-        console.log(messageReaction.message.last_item_index);
         for(i = messageReaction.message.last_item_index + 1 - client.config.max_shown_in_message; i < messageReaction.message.last_item_index + 1; i++) {
-          embed.addFields({name: messageReaction.message.query_result_ammo[i].name, value: "tbd"});
+          embed.addFields({name: messageReaction.message.query_result_ammo[i].name, value: messageReaction.message.query_result_ammo[i].flesh_damage + " | " + messageReaction.message.query_result_ammo[i].penetration_power + " | " + messageReaction.message.query_result_ammo[i].armor_damage_percent + " | " + messageReaction.message.query_result_ammo[i].accuracy_percent + " | " + messageReaction.message.query_result_ammo[i].recoil_percent + " | " + messageReaction.message.query_result_ammo[i].fragmentation_chance + " | " + messageReaction.message.query_result_ammo[i].armor_effect_1 + " | " + messageReaction.message.query_result_ammo[i].armor_effect_2 + " | " + messageReaction.message.query_result_ammo[i].armor_effect_3 + " | " + messageReaction.message.query_result_ammo[i].armor_effect_4 + " | " + messageReaction.message.query_result_ammo[i].armor_effect_5 + " | " + messageReaction.message.query_result_ammo[i].armor_effect_6});
         }
 
         messageReaction.message.edit(embed).then(async (msg) => {
@@ -58,11 +60,12 @@ module.exports = (client, messageReaction, user) => {
         }
         // Next page
         const embed = new Discord.MessageEmbed();
-        embed.setTitle("This is the ammunition information for the given caliber");
+        embed.setTitle("This is the ammunition information for the given caliber: " + messageReaction.message.query_result_ammo[0].caliber);
+        embed.setDescription("__FD | PP | AD% | A% | R% | FC | 1 | 2 | 3 | 4 | 5 | 6__\nFD = Flesh Damage\nPP = Penetration Power\nAD% = Armor DMG %\nA% = Accuracy Percent\nR% = Recoil Percent\nFC = Fragmentation Chance\n1..6 = Armor Effectiveness Against Class");
 
         if(messageReaction.message.last_item_index + 1 + client.config.max_shown_in_message >= messageReaction.message.query_result_ammo.length) {
           for(i = messageReaction.message.last_item_index + 1; i < messageReaction.message.query_result_ammo.length; i++) {
-            embed.addFields({name: messageReaction.message.query_result_ammo[i].name, value: "tbd"});
+            embed.addFields({name: messageReaction.message.query_result_ammo[i].name, value: messageReaction.message.query_result_ammo[i].flesh_damage + " | " + messageReaction.message.query_result_ammo[i].penetration_power + " | " + messageReaction.message.query_result_ammo[i].armor_damage_percent + " | " + messageReaction.message.query_result_ammo[i].accuracy_percent + " | " + messageReaction.message.query_result_ammo[i].recoil_percent + " | " + messageReaction.message.query_result_ammo[i].fragmentation_chance + " | " + messageReaction.message.query_result_ammo[i].armor_effect_1 + " | " + messageReaction.message.query_result_ammo[i].armor_effect_2 + " | " + messageReaction.message.query_result_ammo[i].armor_effect_3 + " | " + messageReaction.message.query_result_ammo[i].armor_effect_4 + " | " + messageReaction.message.query_result_ammo[i].armor_effect_5 + " | " + messageReaction.message.query_result_ammo[i].armor_effect_6});
           }
           messageReaction.message.last_item_index = messageReaction.message.query_result_ammo.length - 1;
           messageReaction.message.edit(embed).then(async (msg) => {
@@ -72,8 +75,9 @@ module.exports = (client, messageReaction, user) => {
           });
         } else {
           for(i = messageReaction.message.last_item_index + 1; i < messageReaction.message.last_item_index + 1 + client.config.max_shown_in_message; i++) {
-            embed.addFields({name: messageReaction.message.query_result_ammo[i].name, value: "tbd"});
+            embed.addFields({name: messageReaction.message.query_result_ammo[i].name, value: messageReaction.message.query_result_ammo[i].flesh_damage + " | " + messageReaction.message.query_result_ammo[i].penetration_power + " | " + messageReaction.message.query_result_ammo[i].armor_damage_percent + " | " + messageReaction.message.query_result_ammo[i].accuracy_percent + " | " + messageReaction.message.query_result_ammo[i].recoil_percent + " | " + messageReaction.message.query_result_ammo[i].fragmentation_chance + " | " + messageReaction.message.query_result_ammo[i].armor_effect_1 + " | " + messageReaction.message.query_result_ammo[i].armor_effect_2 + " | " + messageReaction.message.query_result_ammo[i].armor_effect_3 + " | " + messageReaction.message.query_result_ammo[i].armor_effect_4 + " | " + messageReaction.message.query_result_ammo[i].armor_effect_5 + " | " + messageReaction.message.query_result_ammo[i].armor_effect_6});
           }
+
           messageReaction.message.last_item_index = messageReaction.message.last_item_index + client.config.max_shown_in_message;
           messageReaction.message.edit(embed).then(async (msg) => {
             await msg.reactions.removeAll();
