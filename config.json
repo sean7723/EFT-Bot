@@ -1,4 +1,6 @@
 {
   "token": "NzUzMDY1MTM3MDc3NzQ3Nzky.X1gwjw.VZv7lm0PBE1VNQIUIpDDQJfb9n8",
-  "prefix": "/"
+  "prefix": "/",
+  "max_shown_in_message" : 10,
+  "bot_id" : "753065137077747792"
 }

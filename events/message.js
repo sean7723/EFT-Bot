@@ -1,7 +1,7 @@
 module.exports = (client, message) => {
 
-  if(message.guild !== null && !message.author.bot) {
-    message.reply("DM me instead!");
+  if(message.guild === null && !message.author.bot) {
+    message.reply("Don't DM me!");
     return;
   }
 
